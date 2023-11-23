@@ -1,0 +1,43 @@
+version: "3"
+
+services:
+    db:
+        image: mariadb
+        restart: unless-stopped
+        ports:
+            - "3306:3306"
+        environment: 
+            MYSQL_ROOT_PASSWORD: hackme
+            MYSQL_USER: phpmyadmin
+            MYSQL_PASSWORD: hackme
+            MYSQL_DATABASE: phpmyadmin
+        volumes:
+            - "mysql:/var/lib/mysql"
+
+    phpmyadmin:
+        depends_on:
+            - db
+        image: phpmyadmin
+        restart: unless-stopped
+        ports:
+            - "8081:80"
+        environment: 
+            PMA_HOST: db
+            UPLOAD_LIMIT: 256M
+            PMA_CONTROLUSER: phpmyadmin
+            PMA_PMADB: phpmyadmin
+            PMA_CONTROLPASS: hackme
+    
+    web:
+        build: .
+        restart: unless-stopped
+        user: 1000:1000
+        environment:
+            - TZ=Europe/Budapest
+        ports:
+            - "80:80"
+        volumes:
+            - "./:/var/www/html"
+
+volumes:
+    mysql:
