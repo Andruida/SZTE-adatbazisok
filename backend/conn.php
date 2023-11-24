@@ -1,16 +1,16 @@
 <?php
+if (!defined('IMDB')) {
+    http_response_code(403);
+    exit;
+}
+
 $_servername = "db";
 $_username = "imdb";
 $_password = "hackme";
 $_database = "imdb";
 
-$conn = new mysqli($_servername, $_username, $_password, $_database);
-
-register_shutdown_function("mysqli_close", $conn);
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+$conn = new PDO("mysql:host=$_servername;dbname=$_database", $_username, $_password);
+$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 unset($_servername, $_username, $_password, $_database);
 ?>

@@ -6,7 +6,7 @@ RUN chmod a+x /usr/local/bin/install-php-extensions \
  && apt-get update && apt-get install -y tzdata dnsutils \
  && apt-get clean
 
-RUN install-php-extensions mysqli tidy \
+RUN install-php-extensions pdo pdo_mysql tidy \
  && mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini" \
  && echo "post_max_size = 512M" > $PHP_INI_DIR/conf.d/post_max_size.ini \
  && echo "upload_max_filesize = 512M" > $PHP_INI_DIR/conf.d/upload_max_filesize.ini
