@@ -25,7 +25,7 @@ $p = defined('ACTIVE_PAGE') ? ACTIVE_PAGE : "";
             </div>
             <div class="navbar-nav ms-auto">
                 <?php if (isset($_SESSION['user_id'])) { ?>
-                    <a class="nav-link<?= ($p == "login") ? " active":"" ?>" href="profile.php"><?= $_SESSION['user_fullname'] ?></a>
+                    <a class="nav-link<?= ($p == "login") ? " active":"" ?>" href="#"><?= $_SESSION['user_fullname'] ?></a>
                     <a class="nav-link" href="/backend/logout.php">Kijelentkezés</a>
                 <?php } else { ?>
                     <a class="nav-link<?= ($p == "login") ? " active":"" ?>" href="/login.php">Bejelentkezés</a>

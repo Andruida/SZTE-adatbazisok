@@ -99,7 +99,7 @@ INNER JOIN `movies` `m2` ON `m2`.`id` = `m`.`movie`
 LEFT JOIN `ratings` `r` ON `m`.`id` = `r`.`media`
 LEFT JOIN `genres` `g` ON `m`.`genre` = `g`.`id`
 GROUP BY `a`.`id`, `m`.`id`
-ORDER BY `a`.`name` ASC;;
+ORDER BY `a`.`name` ASC;
 */
 
 $stmt = $conn->prepare(
