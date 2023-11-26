@@ -1,7 +1,7 @@
 <?php
 define('IMDB', true);
-define('TITLE', 'Média megtekintése');
-define('ACTIVE_PAGE', 'media');
+define('TITLE', 'Színész megtekintése');
+define('ACTIVE_PAGE', 'actor');
 if (!isset($_GET['id'])) {
     http_response_code(404);
 }
@@ -15,7 +15,7 @@ if (!isset($_GET["id"])) {
 }
 
 $stmt = $conn->prepare(
-    "SELECT a.id, a.name, a.country as cc, c.name as country FROM `actors` a
+    "SELECT a.id, a.name, a.birthday, a.country as cc, c.name as country FROM `actors` a
     LEFT JOIN countries c ON a.country = c.id
     WHERE a.id = :id;"
 );
@@ -56,13 +56,13 @@ $roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <?php if (isset($_SESSION['user_id'])) { ?>
         <div class="row g-2">
             <div class="col-auto">
-                <a href="actor_edit.php?id=<?= $media["id"] ?>">
+                <a href="actor_edit.php?id=<?= $actor["id"] ?>">
                     <button class="btn btn-primary">Szerkesztés</button>
                 </a>
             </div>
             <div class="col-auto">
                 <form action="/backend/actor_delete.php" method="post">
-                    <input type="hidden" name="id" value="<?= $media["id"] ?>">
+                    <input type="hidden" name="id" value="<?= $actor["id"] ?>">
                     <button type="submit" class="btn btn-danger">Törlés</button>
                 </form>
             </div>
@@ -74,6 +74,10 @@ $roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <tr>
                         <th scope="row">Név</th>
                         <td><?= $actor["name"] ?></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Születési dátum</th>
+                        <td><?= $actor["birthday"] ?></td>
                     </tr>
                     <tr>
                         <th scope="row">Ország</th>

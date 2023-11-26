@@ -18,7 +18,10 @@ $p = defined('ACTIVE_PAGE') ? ACTIVE_PAGE : "";
             <div class="navbar-nav">
                 <a class="nav-link<?= ($p == "index") ? " active":"" ?>" href="/">Főoldal</a>
                 <a class="nav-link<?= ($p == "search") ? " active":"" ?>" href="/search.php">Keresés</a>
+                <?php if (isset($_SESSION['user_id'])) { ?>
                 <a class="nav-link<?= ($p == "media_edit") ? " active":"" ?>" href="/media_edit.php">Tartalom hozzáadása</a>
+                <?php } ?>
+                <a class="nav-link<?= ($p == "actors") ? " active":"" ?>" href="/actors.php">Színészek</a>
             </div>
             <div class="navbar-nav ms-auto">
                 <?php if (isset($_SESSION['user_id'])) { ?>

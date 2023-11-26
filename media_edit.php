@@ -181,6 +181,8 @@ $new_series = isset($_GET['series']);
                 hozzáadása</a>
             <a href="/media_edit.php?series" class="btn btn-primary mb-3" style="max-width: 200px; width: 100%;">Sorozat
                 hozzáadása</a>
+            <a href="/actor_edit.php" class="btn btn-primary mb-3" style="max-width: 200px; width: 100%;">Színész
+                hozzáadása</a>
         </div>
         <?php } ?>
     </div>
