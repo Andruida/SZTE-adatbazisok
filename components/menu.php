@@ -3,7 +3,9 @@ if (!defined('IMDB')) {
     http_response_code(403);
     exit;
 }
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 $p = defined('ACTIVE_PAGE') ? ACTIVE_PAGE : "";
 ?>
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -16,6 +18,7 @@ $p = defined('ACTIVE_PAGE') ? ACTIVE_PAGE : "";
             <div class="navbar-nav">
                 <a class="nav-link<?= ($p == "index") ? " active":"" ?>" href="/">Főoldal</a>
                 <a class="nav-link<?= ($p == "search") ? " active":"" ?>" href="/search.php">Keresés</a>
+                <a class="nav-link<?= ($p == "media_edit") ? " active":"" ?>" href="/media_edit.php">Tartalom hozzáadása</a>
             </div>
             <div class="navbar-nav ms-auto">
                 <?php if (isset($_SESSION['user_id'])) { ?>
