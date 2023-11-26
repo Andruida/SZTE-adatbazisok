@@ -39,7 +39,7 @@ $stmt->execute();
 $years = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 $stmt = $conn->prepare(
-    "SELECT a.name FROM `actors` a
+    "SELECT a.id, a.name FROM `actors` a
     LEFT JOIN actor_media am ON a.id = am.actor
     LEFT JOIN `media` m ON am.media = m.id
     WHERE m.movie IS NOT NULL
@@ -51,8 +51,10 @@ $stmt->execute();
 $bestActorRow = $stmt->fetch(PDO::FETCH_ASSOC);
 if ($bestActorRow) {
     $bestActor = $bestActorRow['name'];
+    $bestActorID = $bestActorRow['id'];
 } else {
     $bestActor = "-";
+    $bestActorID = null;
 }
 
 $stmt = $conn->prepare(
@@ -120,6 +122,16 @@ $best_movies_of_actors = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <?php require 'components/menu.php'; ?>
     <div class="container mt-4">
         <h1>IMDb</h1>
+        <?php if (isset($_GET['new_user'])) { ?>
+        <div class="alert alert-success mt-4" role="alert">
+            Sikeres regisztráció!
+        </div>
+        <?php } ?>
+        <?php if (isset($_GET['deleted'])) { ?>
+        <div class="alert alert-success mt-4" role="alert">
+            Sikeresen törölve!
+        </div>
+        <?php } ?>
         <datalist id="titles">
             <?php foreach ($titles as $title) { ?>
             <option value="<?= $title['title'] ?>">
@@ -203,7 +215,11 @@ $best_movies_of_actors = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </table>
         </div>
 
-        <h2 class="mt-5">Legtöbb filmben szereplő színész (<?= $bestActor ?>) sorozatai</h2>
+        <?php if ($bestActorID) { ?>
+        <h2 class="mt-5">Legtöbb filmben szereplő színész (<a href="/actor.php?id=<?= $bestActorID ?>"><?= $bestActor ?></a>) sorozatai</h2>
+        <?php } else { ?>
+        <h2 class="mt-5">Legtöbb filmben szereplő színész sorozatai</h2>
+        <?php } ?>
         <div class="table-responsive">
             <table class="table table-striped">
                 <thead>
@@ -259,7 +275,7 @@ $best_movies_of_actors = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         $genre = implode(", ", $genre);
                     ?>
                     <tr>
-                        <td><?= $movie['actor'] ?></td>
+                        <td><a href="/actor.php?id=<?= $movie['a_id'] ?>"><?= $movie['actor'] ?></td>
                         <td><a href="/media.php?id=<?= $movie['id'] ?>"><?= $movie['title'] ?></a></td>
                         <td><?= $genre ?></td>
                         <td><?= $movie['length'] ?> perc</td>

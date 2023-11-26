@@ -49,6 +49,6 @@ $_SESSION['user_id'] = $id;
 $_SESSION['user_name'] = $username;
 $_SESSION['user_fullname'] = $fullname;
 
-header('Location: /');
+header('Location: /?new_user');
 
 ?>
